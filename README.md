@@ -54,7 +54,7 @@ The graph generation contains the following steps:
     - `interactions_validation.csv` contains validation edges   
     - `interactions_test.csv` contains test edges   
 
-5. Generate graphs:
+5. Generate graphs:  
     In this step, we generate graph dataset for each data split given the processed users, recipes and their respective edges.
 
 6. Storing graphs:  
