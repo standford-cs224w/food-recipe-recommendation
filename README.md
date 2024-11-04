@@ -29,7 +29,7 @@ The graph generation contains the following steps:
 2. Processing users:  
     In order to generate user nodes, we only retrieve their IDs from `interactions_train.csv` as they do not contain rich properties.  
     Notes:
-    - Originally, we intented to consider `techniques` as a property for user ndoes, but they seem to be based on all the edges (interactions). Considering we split the edges into training, validation, and test sets, adding `techniques` might resules in biased evaluation results.
+    - Originally, we intented to consider `techniques` as a property for user ndoes, but they seem to be based on all the edges (interactions). Considering we split the edges into training, validation, and test sets, adding `techniques` might lead to biased evaluation results.
 
     - `interactions_train.csv` contains all the users, hence there is no unseen users for validation and testing. We tested it out by running the following script:
         ```
