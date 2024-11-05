@@ -127,9 +127,9 @@ def generate_graph(user_mapping: list[tuple[int, int]], recipe_x: torch.Tensor, 
 
     return graph_data
 
-def split_graph(graph_data: HeteroData, training_supervision_ratio: float, validation_ratio: float, test_ratio: float) -> dict[str, HeteroData]:
+def split_graph(graph_data: HeteroData, supervision_train_ratio: float, validation_ratio: float, test_ratio: float) -> dict[str, HeteroData]:
     transform = RandomLinkSplit(
-        disjoint_train_ratio=training_supervision_ratio,
+        disjoint_train_ratio=supervision_train_ratio,
         num_val=validation_ratio,
         num_test=test_ratio,
         neg_sampling_ratio=0.0,
@@ -137,7 +137,7 @@ def split_graph(graph_data: HeteroData, training_supervision_ratio: float, valid
         rev_edge_types=[('recipe', 'rev_rates', 'user')],
     )
 
-    train_graph, validation_graph, test_data = transform(graph_data)
+    train_graph, validation_graph, test_graph = transform(graph_data)
 
     return {
         'train': train_graph, 
@@ -156,7 +156,7 @@ if __name__ == '__main__':
     sequence_embedder_id = 'sentence-transformers/all-mpnet-base-v2'
     device = 'cuda' if torch.cuda.is_available() else None
     batch_size = 64
-    training_supervision_ratio = 0.2
+    supervision_train_ratio = 0.2
     validation_ratio = 0.05
     test_ratio = 0.1
     graph_version = 1
@@ -208,7 +208,7 @@ if __name__ == '__main__':
     )
 
     print(f'Splitting graph dataset...')
-    graph_splits = split_graph(graph, training_supervision_ratio, validation_ratio, test_ratio)
+    graph_splits = split_graph(graph, supervision_train_ratio, validation_ratio, test_ratio)
 
     print('Storing graph splits...')
     for split_name, graph in graph_splits.items():
