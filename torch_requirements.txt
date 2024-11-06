@@ -1,4 +1,3 @@
 torch-scatter -f https://data.pyg.org/whl/torch-2.4.0+cu121.html
 torch-sparse -f https://data.pyg.org/whl/torch-2.4.0+cu121.html
 torch-geometric -f https://data.pyg.org/whl/torch-2.4.0+cu121.html
-pyg-library -f https://data.pyg.org/whl/torch-2.4.0+cu121.html
