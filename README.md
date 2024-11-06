@@ -16,10 +16,13 @@
     ```
 
 ## Graph Dataset Generation
-In order to generate graph datasets, you can run the following python script:
+In order to generate graph datasets, you can run the following command:
 ```
 python3 -m graph_generation.graph_dataset_generator
 ``` 
+
+The details can be found in the [graph_dataset_generator.py](./graph_generation/graph_dataset_generator.py)
+
 
 The graph generation contains the following steps:  
 1. Downloading data:  
@@ -49,13 +52,24 @@ The graph generation contains the following steps:
     In generall, the encoders make sure the values are in numeric form with correect data types and also convert them into Torch tensors to prepare them for training and inference.
 
 4. Processing edges:  
-    In this step, we process edges with a single property (`rating`) for each data split separately. 
-    - `interactions_train.csv` contains train edges
-    - `interactions_validation.csv` contains validation edges   
-    - `interactions_test.csv` contains test edges   
+    In this step, we process edges with a single property (`rating`) using `RAW_interactions.csv` dataset.
 
-5. Generating graphs:  
-    In this step, we generate graph dataset for each data split given the processed users, recipes and their respective edges.
+5. Generating graph:  
+    In this step, we generate a heterogeneous graph dataset given the processed users, recipes and their respective edges.
+    We construct heterogeneous graphs using `torch_geometric.data.HeteroData` since we have two different types of nodes (users and edges).
+
+6. Generating data splits:
+    After generating the graph, we split them into three graph with distinct edges using `torch_geometric.transforms.RandomLinkSplit`:
+    - Train graph: It contains 85% of all edges, 20% percent of which is used as supervision edges.
+    - Validation graph: It contains 5% of the remaining edges.
+    - Test graph: It contains 10% of the remaining edges.  
+
+    These are the hyperparameters in the code that can control the edge ratios for each split:
+    ```
+    supervision_train_ratio = 0.2
+    validation_ratio = 0.05
+    test_ratio = 0.1
+    ```
 
 6. Storing graphs:  
     Finally, we store the generated graphs in PyTorch (.pt) files which can be used for training, validation and testing later. 
