@@ -162,7 +162,7 @@ if __name__ == '__main__':
     graph_version = 1
 
     print("Downloading raw files from Kaggle...")
-    # download_raw_data(raw_dataset_name, base_data_path)
+    download_raw_data(raw_dataset_name, base_data_path)
 
     print('Processing user nodes...')
     _, user_mapping = load_nodes_from_csv(
