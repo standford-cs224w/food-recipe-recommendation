@@ -33,10 +33,10 @@ pip install --upgrade pip || { echo "Failed to upgrade pip"; exit 1; }
 
 # Install requirements
 echo "Installing main packages..."
-pip install -r requirements.txt || { echo "Failed to install main packages"; exit 1; }
+pip install --upgrade -r requirements.txt || { echo "Failed to install main packages"; exit 1; }
 
 echo "Installing torch-related packages..."
-pip install -r torch_requirements.txt || { echo "Failed to install torch-related packages"; exit 1; }
+pip install --upgrade -r torch_requirements.txt || { echo "Failed to install torch-related packages"; exit 1; }
 
 echo "All packages installed successfully!"
 
